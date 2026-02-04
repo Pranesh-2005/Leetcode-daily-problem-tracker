@@ -383,17 +383,17 @@ def run_scheduler(secret):
         local = now.astimezone(pytz.timezone(tz))
         hour = local.hour
 
-        if hour == 9:
+        if 8 <= hour <= 9:
             slot = "morning"
             sub = "Today's LeetCode"
             body = f"<b>{title}</b>"
 
-        elif hour == 15:
+        elif 14 <= hour <= 15:
             slot = "afternoon"
             sub = "Reminder"
             body = f"Solve <b>{title}</b>"
 
-        elif hour == 20:
+        elif 19 <= hour <= 20:
             slot = "night"
             sub = "Final Reminder"
             body = f"Last chance: <b>{title}</b>"
