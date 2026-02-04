@@ -47,11 +47,28 @@ jobs:
           echo "$RESULT" >> scheduler_logs.txt
           echo "" >> scheduler_logs.txt
 
-      - name: Commit logs
+      - name: Commit logs (once per day)
         run: |
-          git config --global user.name "Pranesh-2005"
-          git config --global user.email "praneshmadhan646@gmail.com"
+          HOUR=$(date -u +"%H")
 
-          git add scheduler_logs.txt
-          git commit -m "Update scheduler logs" || echo "No changes"
-          git push
+          # Commit only at 16 UTC (~9:30 PM IST)
+          if [ "$HOUR" = "16" ]; then
+
+            echo "Daily commit at $(date -u)"
+
+            git config --global user.name "Pranesh-2005"
+            git config --global user.email "praneshmadhan646@gmail.com"
+
+            git add scheduler_logs.txt
+
+            if git diff --cached --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "daily: scheduler logs"
+              git push
+            fi
+
+          else
+            echo "Skipping commit at hour $HOUR"
+          fi
+
