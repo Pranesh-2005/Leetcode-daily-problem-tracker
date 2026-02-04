@@ -1,0 +1,55 @@
+name: LeetCode Email Scheduler
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # every hour
+  workflow_dispatch:
+
+jobs:
+  run-scheduler:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run Scheduler and Save Log
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          echo "============================" >> scheduler_logs.txt
+          echo "Run Time: $(date)" >> scheduler_logs.txt
+
+          echo "Calling HF API..." >> scheduler_logs.txt
+
+          RESPONSE=$(curl -s -X POST \
+            https://pranesh64-leetcode-daily-problem-tracker.hf.space/gradio_api/call/run_scheduler \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"data\": [
+                \"$CRON_SECRET\"
+              ]
+            }")
+
+          echo "POST Response:" >> scheduler_logs.txt
+          echo "$RESPONSE" >> scheduler_logs.txt
+
+          EVENT_ID=$(echo "$RESPONSE" | awk -F'"' '{ print $4 }')
+
+          echo "Event ID: $EVENT_ID" >> scheduler_logs.txt
+
+          RESULT=$(curl -s -N \
+            https://pranesh64-leetcode-daily-problem-tracker.hf.space/gradio_api/call/run_scheduler/$EVENT_ID)
+
+          echo "Result:" >> scheduler_logs.txt
+          echo "$RESULT" >> scheduler_logs.txt
+          echo "" >> scheduler_logs.txt
+
+      - name: Commit logs
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git add scheduler_logs.txt
+          git commit -m "Update scheduler logs" || echo "No changes"
+          git push
