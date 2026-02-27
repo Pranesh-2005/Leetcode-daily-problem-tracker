@@ -188,3 +188,13 @@ Result:
 event: complete
 data: ["\u2705 Scheduler completed. Sent: 0 emails"]
 
+============================
+Run Time: Fri Feb 27 16:44:19 UTC 2026
+Calling HF API...
+POST Response:
+{"event_id":"cbc330879a1e45cca5ac1ac3ccab2c96"}
+Event ID: cbc330879a1e45cca5ac1ac3ccab2c96
+Result:
+event: complete
+data: ["\u274c Failed to get daily problem: Could not find title and slug in daily API response"]
+
