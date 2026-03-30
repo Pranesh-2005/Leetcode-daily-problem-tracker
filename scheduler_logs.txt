@@ -408,3 +408,13 @@ Result:
 event: complete
 data: ["\u2705 Scheduler completed. Sent: 0 emails"]
 
+============================
+Run Time: Mon Mar 30 16:59:43 UTC 2026
+Calling HF API...
+POST Response:
+{"event_id":"da0c5ff4e8094b428aa38cacc95354d4"}
+Event ID: da0c5ff4e8094b428aa38cacc95354d4
+Result:
+event: complete
+data: ["\u2705 Scheduler completed. Sent: 0 emails"]
+
