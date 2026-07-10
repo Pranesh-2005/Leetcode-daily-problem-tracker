@@ -948,3 +948,12 @@ Result:
 event: complete
 data: ["\u2705 Scheduler completed. Sent: 0 emails"]
 
+============================
+Run Time: Fri Jul 10 16:57:30 UTC 2026
+Calling HF API...
+POST Response:
+The space is paused, ask a maintainer to restart it
+Event ID: 
+Result:
+The space is paused, ask a maintainer to restart it
+
